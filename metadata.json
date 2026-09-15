@@ -1,0 +1,6 @@
+{
+  "name": "Dashboard SST Inteligente",
+  "description": "Centro de controle e gestão inteligente de Segurança e Saúde no Trabalho (SST) por PROJECTAI com diagnóstico executivo, monitoramento de riscos, inspeções, ações preventivas e IA analítica.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
