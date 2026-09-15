@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import {
   FileText,
-  Download,
   Copy,
   Check,
   Printer,
@@ -24,19 +23,6 @@ export const PRDModal: React.FC<PRDModalProps> = ({ isOpen, onClose, onNotificat
   const [searchTerm, setSearchTerm] = useState('');
 
   if (!isOpen) return null;
-
-  const downloadMarkdownFile = () => {
-    // Fetch directly from public or create blob
-    const link = document.createElement('a');
-    link.href = '/PRD_PROJECTAI_SST.md';
-    link.download = 'PRD_SST_PROJECTAI_OFICIAL_v2.1.md';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    if (onNotification) {
-      onNotification('Download do PRD em Markdown (.md) iniciado!');
-    }
-  };
 
   const copyToClipboard = () => {
     fetch('/PRD_PROJECTAI_SST.md')
@@ -61,15 +47,15 @@ export const PRDModal: React.FC<PRDModalProps> = ({ isOpen, onClose, onNotificat
   };
 
   const prdHighlights = [
-    { num: '01', title: 'Nome do Produto', desc: 'PROJECTAI SST Suite v2.1.0' },
-    { num: '02', title: 'Resumo Executivo', desc: 'Plataforma analítica e preditiva de SST baseada em evidências' },
-    { num: '03', title: 'Problema & Dores', desc: 'Dados fragmentados, demora em investigações e inércia em 5W2H' },
-    { num: '04', title: 'Objetivos & Metas', desc: 'Zero acidentes, 100% conformidade NR-01 GRO/PGR e NBR 14280' },
-    { num: '07', title: 'Escopo Baseline', desc: '9 Módulos operacionais, Camada 4 de Auditoria, Carga CSV e IA' },
-    { num: '15', title: 'Modelo de Dados', desc: 'Entidades relacionais: Ocorrencia, Acao5W2H, AuditoriaLog, Risco' },
-    { num: '17', title: 'Fórmulas e KPIs', desc: 'TF (NBR 14280), TG, ISSST ponderado e vínculo com OEE Industrial' },
-    { num: '18', title: 'Matriz RBAC', desc: '5 Perfis de segurança: Admin, Gestor SST, Supervisor, Operador, Diretoria' },
-    { num: '25', title: 'MVP Entregue', desc: 'Solução moderna, responsiva, tema dark/preto puro e zero ruído' }
+    { num: '01', title: 'Propósito do PRD', desc: 'Fonte da verdade única para produto, dados e conformidade' },
+    { num: '02', title: 'Cadeia de Valor', desc: 'Perigo → Risco → Controle → Desvio → Ação → Evidência' },
+    { num: '07', title: 'Princípios de Design', desc: 'Evidence First, Human in the Loop, Explainability e Auditability' },
+    { num: '12', title: 'Modelo de Dados', desc: 'Entidades: Ocorrencia, Risco, Acao5W2H, Inspecao, Evidencia' },
+    { num: '14', title: 'Fórmulas e KPIs', desc: 'TF (NBR 14280), TG, ISSST ponderado e regra de dados faltantes' },
+    { num: '17', title: 'Regras de Negócio', desc: 'RN01 (Afastamento 5W2H), RN03 (Risco sem barreira), RN05 (Evidência)' },
+    { num: '18', title: 'Motor de Compliance', desc: 'Separação entre fato, cálculo e conclusão de conformidade' },
+    { num: '21', title: 'Governança & Audit', desc: 'Trilha de auditoria criptográfica e linhagem ponta a ponta' },
+    { num: '33', title: 'Decisões de Produto', desc: 'PWA Web React+TypeScript, P0 a P3 e roadmap IoT/eSocial' }
   ];
 
   return (
@@ -101,12 +87,12 @@ export const PRDModal: React.FC<PRDModalProps> = ({ isOpen, onClose, onNotificat
                 <h3 className="text-base font-bold text-white tracking-tight">
                   Product Requirements Document (PRD) Oficial
                 </h3>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-amber-400">
-                  PROJECTAI v2.1
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-amber-500/40 text-amber-400 font-bold">
+                  PROJECTAI v2.2.0-PROD
                 </span>
               </div>
               <p className="text-xs text-zinc-400">
-                Especificação técnica completa com os 27 pontos normativos, arquitetura e fórmulas industriais
+                Especificação técnica consolidada para MVP/V1: Evidências, Trazabilidade, Governança e Regras de Negócio
               </p>
             </div>
           </div>
@@ -154,15 +140,6 @@ export const PRDModal: React.FC<PRDModalProps> = ({ isOpen, onClose, onNotificat
               <Printer className="w-3.5 h-3.5 text-zinc-400" />
               <span>Imprimir / PDF</span>
             </button>
-
-            <button
-              onClick={downloadMarkdownFile}
-              className="flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-lg bg-amber-500 hover:bg-amber-400 text-black transition-colors shadow-sm shadow-amber-500/10"
-              title="Baixar arquivo Markdown (.md) completo"
-            >
-              <Download className="w-4 h-4" />
-              <span>Descargar PRD (.md)</span>
-            </button>
           </div>
         </div>
 
@@ -189,32 +166,32 @@ export const PRDModal: React.FC<PRDModalProps> = ({ isOpen, onClose, onNotificat
           <div className="p-4 sm:p-5 rounded-xl bg-black border border-zinc-800/80 font-mono text-[11px] leading-relaxed text-zinc-300 space-y-4 max-h-[380px] overflow-y-auto">
             <div className="text-zinc-500 border-b border-zinc-900 pb-2 flex items-center justify-between">
               <span>PRD_PROJECTAI_SST.md • Visualização Integral</span>
-              <span className="text-emerald-400 font-bold">27 / 27 Seções Concluídas</span>
+              <span className="text-emerald-400 font-bold">35 / 35 Seções Consolidadas (v2.2.0-PROD)</span>
             </div>
 
             <div>
               <p className="text-amber-400 font-bold text-sm"># PRODUCT REQUIREMENTS DOCUMENT (PRD) — PROJECTAI</p>
-              <p className="text-zinc-400">## SISTEMA INTEGRADO DE GESTÃO E DASHBOARD INTELIGENTE DE SST</p>
+              <p className="text-zinc-400">## PLATAFORMA INTELIGENTE DE SEGURANÇA E SAÚDE NO TRABALHO, GESTÃO DE RISCOS E CUMPRIMENTO BASEADO EM EVIDÊNCIAS</p>
               <p className="text-zinc-500 text-[10px]">
-                Código: PRD-SST-PAI-2026-V2.1 | Autor: Nicolas Herrera | Metodologias: NBR 14280, NR-01, ISO 45001
+                Código: PRD-SST-PAI-2026-V2.2-PROD | Autor: Nicolas Herrera | Metodologias: NBR 14280, NR-01, ISO 45001, Evidence-First
               </p>
             </div>
 
             <div className="space-y-3 pt-2 text-zinc-300">
-              <p><strong className="text-white">1. Nome do Produto:</strong> PROJECTAI SST Suite — Dashboard Inteligente e Plataforma de Gestão Preditiva.</p>
-              <p><strong className="text-white">2. Resumo Executivo:</strong> Plataforma analítica e operacional que unifica dados de SST e Engenharia Industrial em uma arquitetura moderna sem ruído visual.</p>
-              <p><strong className="text-white">3. Problema:</strong> Dados dispersos, demora em investigações, fórmulas calculadas incorretamente à mão e perda de OEE industrial por paradas decorrentes de acidentes.</p>
-              <p><strong className="text-white">4. Objetivo:</strong> Centralizar 100% dos eventos, zerar a taxa de frequência e garantir conformidade fiscalizatória integral (NR-01 GRO/PGR).</p>
-              <p><strong className="text-white">15. Modelo de Dados:</strong> Entidades `Ocorrencia`, `Acao5W2H`, `AuditoriaLog`, `RiscoMatriz`, `TreinamentoColaborador`, `Inspecao`. Todas normalizadas e auditáveis.</p>
-              <p><strong className="text-white">17. Fórmulas e KPIs Industriais:</strong></p>
+              <p><strong className="text-white">1. Propósito do Documento:</strong> Fonte da verdade para UX/UI, desenvolvimento, cálculo de indicadores, regras de negócio e rastreabilidade auditável.</p>
+              <p><strong className="text-white">2. Visão do Produto & Cadeia de Valor:</strong> Perigo → Risco → Controle → Desvio → Ocorrência → Ação 5W2H → Evidência → Verificação de Eficácia.</p>
+              <p><strong className="text-white">3. Problema:</strong> Dados fragmentados, cálculos manuais com risco de inconsistência, baixa rastreabilidade e falta de evidências auditáveis.</p>
+              <p><strong className="text-white">7. Princípios de Design:</strong> Evidence First, Human in the Loop, Explainability, Auditability, Separation of Facts and Inference.</p>
+              <p><strong className="text-white">12. Modelo de Dados Core:</strong> Entidades `Unidade`, `Setor`, `Ocorrencia`, `Risco`, `Acao5W2H`, `Inspecao`, `Treinamento`, `Documento`, `Evidencia`, `AuditEvent`, `NormaRegra`.</p>
+              <p><strong className="text-white">14. Fórmulas e KPIs Normativos:</strong></p>
               <div className="p-3 bg-zinc-950 rounded border border-zinc-900 text-zinc-300 space-y-1">
-                <div>• <strong>Taxa de Frequência (TF):</strong> (N x 1.000.000) / HHT — Padrão NBR 14280</div>
-                <div>• <strong>Taxa de Gravidade (TG):</strong> ((Dias Perdidos + Dias Debitados) x 1.000.000) / HHT</div>
-                <div>• <strong>Índice de Saúde SST (ISSST):</strong> Score ponderado (Acidentes 30%, Ações 25%, Inspeções 20%, Treinamento 15%, Riscos 10%)</div>
-                <div>• <strong>Impacto no OEE:</strong> Redução de paradas não programadas em máquinas para preservar a Disponibilidade fabril.</div>
+                <div>• <strong>Taxa de Frequência (TF):</strong> (N x 1.000.000) / HHT — NBR 14280 com HHT auditada</div>
+                <div>• <strong>Taxa de Gravidade (TG):</strong> ((Dias Perdidos + Debitados) x 1.000.000) / HHT</div>
+                <div>• <strong>Índice de Saúde SST (ISSST):</strong> 0.35S + 0.25A + 0.20I + 0.10T + 0.10D (Normalizado 0-100)</div>
+                <div>• <strong>Regra de Dados Faltantes:</strong> Indicador marcado como INDETERMINADO sem conversão automática a zero.</div>
               </div>
-              <p><strong className="text-white">18. Roles e Permissões (RBAC):</strong> Perfis segregados para Administrador, Gestor SST, Supervisor, Operacional e Diretoria.</p>
-              <p><strong className="text-white">24. Critérios de Aceitação:</strong> Cálculos certificados, filtros reativos em &lt;16ms, trilha de auditoria à prova de adulteração.</p>
+              <p><strong className="text-white">17. Regras de Negócio Fundamentais:</strong> RN01 (Afastamento ativa 5W2H), RN02 (CAT/eSocial controlado), RN03 (Risco crítico sem barreira gera alerta), RN05 (Ação concluída exige nota de evidência obrigatória).</p>
+              <p><strong className="text-white">21. Governança e Auditoria:</strong> Audit trail criptográfico encadeado (Hash SHA-256), data lineage completo e dicionário de métricas.</p>
             </div>
           </div>
         </div>
@@ -222,14 +199,13 @@ export const PRDModal: React.FC<PRDModalProps> = ({ isOpen, onClose, onNotificat
         {/* Modal Footer */}
         <div className="pt-3 border-t border-zinc-900 flex flex-wrap items-center justify-between gap-3 text-xs text-zinc-500">
           <div>
-            Arquivo oficial gerado em formato padrão <span className="text-zinc-300 font-mono">.md</span> (Markdown universal).
+            Documento técnico em conformidade com as diretrizes e padrões de projeto PROJECTAI.
           </div>
           <button
-            onClick={downloadMarkdownFile}
-            className="flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg bg-amber-500 hover:bg-amber-400 text-black transition-colors"
+            onClick={onClose}
+            className="px-4 py-2 text-xs font-semibold rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors"
           >
-            <Download className="w-4 h-4" />
-            <span>Baixar Arquivo Completo Agora (.md)</span>
+            Fechar
           </button>
         </div>
       </motion.div>

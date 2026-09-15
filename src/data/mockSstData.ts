@@ -12,7 +12,10 @@ import {
   SaudeSSTWeights,
   AuditoriaLog,
   DataQualityReport,
-  AlertRule
+  AlertRule,
+  Evidencia,
+  NormaRegra,
+  ComplianceItem
 } from '../types/sst';
 
 export const INITIAL_SAUDE_WEIGHTS: SaudeSSTWeights = {
@@ -1164,4 +1167,138 @@ export const MOCK_ALERT_RULES: AlertRule[] = [
     versao: '1.1'
   }
 ];
+
+export const MOCK_EVIDENCIAS: Evidencia[] = [
+  {
+    id: 'EVD-001',
+    tipo: 'ART',
+    nome: 'ART CREA-SP 2026/89412 - Enclausuramento Prensa P-04',
+    descricao: 'Anotação de Responsabilidade Técnica emitida por Eng. Mecânico especialista em NR-12 com laudo de teste de parada e bimanual.',
+    source: 'CREA-SP / Repositório Engenharia Industrial',
+    hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    capturedAt: '2026-02-18 14:30',
+    capturedBy: 'Eng. Ricardo Mansur',
+    createdAt: '2026-02-18 14:35'
+  },
+  {
+    id: 'EVD-002',
+    tipo: 'Foto',
+    nome: 'Comprovação Fotográfica de Instalação de Linha de Vida',
+    descricao: 'Inspeção fotográfica do trilho ancorado e mosquetões com trava dupla no Mezanino de Expedição Campinas.',
+    source: 'Inspeção Móvel SST Tablet ID #04',
+    hash: '8f434346648f6b96df89dda901c5176b10a6d83961dd3c1ac88b59b2dc327aa4',
+    capturedAt: '2026-03-02 09:15',
+    capturedBy: 'Téc. Lucas Miranda',
+    createdAt: '2026-03-02 09:20'
+  },
+  {
+    id: 'EVD-003',
+    tipo: 'Certificado Treinamento',
+    nome: 'Certificados de Reciclagem NR-35 Trabalho em Altura (Turma Março)',
+    descricao: 'Atestados de aprovação com carga horária de 8h e proficiência prática assinados por instrutor habilitado.',
+    source: 'Escola SENAI Metalmecânica',
+    hash: 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb',
+    capturedAt: '2026-03-08 17:00',
+    capturedBy: 'Coord. RH / Treinamentos',
+    createdAt: '2026-03-09 08:30'
+  },
+  {
+    id: 'EVD-004',
+    tipo: 'Laudo Técnico',
+    nome: 'Laudo Ergonômico de Postos de Trabalho (NR-17 / NHO-11)',
+    descricao: 'Análise Ergonômica do Trabalho (AET) com método RULA e pontuação de esforço para operadores de usinagem.',
+    source: 'ErgoTech Consultoria em Saúde Ocupacional',
+    hash: '4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce',
+    capturedAt: '2026-01-20 16:45',
+    capturedBy: 'Dra. Camila Nogueira (Médica do Trabalho)',
+    createdAt: '2026-01-21 10:00'
+  }
+];
+
+export const MOCK_NORMAS_REGRAS: NormaRegra[] = [
+  {
+    id: 'NRG-01',
+    codigo: 'NR-01.GRO',
+    titulo: 'Gerenciamento de Riscos Ocupacionais (GRO/PGR)',
+    versao: 'Portaria SEPRT nº 6.730/2020',
+    vigenciaInicio: '2022-01-03',
+    fonte: 'Ministério do Trabalho e Previdência',
+    regra: 'Identificação contínua de perigos, avaliação de risco bidimensional (P x S), inventário e plano de ação estruturado.',
+    evidenciaRequerida: 'Inventário de Riscos com matriz 3x3 e Plano de Ação 5W2H com status de mitigação.'
+  },
+  {
+    id: 'NRG-02',
+    codigo: 'NBR-14280.TF_TG',
+    titulo: 'Cadastro de Acidentes do Trabalho — Procedimento e Estatística',
+    versao: 'ABNT NBR 14280:2001',
+    vigenciaInicio: '2001-04-30',
+    fonte: 'Associação Brasileira de Normas Técnicas (ABNT)',
+    regra: 'Cálculo de TF = (N x 1.000.000) / HHT e TG = ((Dias Perdidos + Debitados) x 1.000.000) / HHT.',
+    evidenciaRequerida: 'Apuração mensal de Horas-Homem Trabalhadas (HHT) via folha e espelho de ponto.'
+  },
+  {
+    id: 'NRG-03',
+    codigo: 'NR-12.SEG_MAQUINAS',
+    titulo: 'Segurança no Trabalho em Máquinas e Equipamentos',
+    versao: 'Portaria SEPRT nº 916/2019',
+    vigenciaInicio: '2019-07-31',
+    fonte: 'Ministério da Economia / MTE',
+    regra: 'Proteção física enclausurada, comando bimanual sincronizado e parada de emergência categoria 4.',
+    evidenciaRequerida: 'ART de instalação com laudo de teste de intertravamento e relé de segurança.'
+  },
+  {
+    id: 'NRG-04',
+    codigo: 'eSocial.S-2210',
+    titulo: 'Comunicação de Acidente de Trabalho (CAT)',
+    versao: 'Manual de Orientação do eSocial v.S-1.2',
+    vigenciaInicio: '2023-01-16',
+    fonte: 'Governo Federal / eSocial',
+    regra: 'Transmissão eletrônica do evento S-2210 até o primeiro dia útil seguinte ao da ocorrência ou imediato em óbito.',
+    evidenciaRequerida: 'Recibo oficial de transmissão e protocolo com chave de validação XML do eSocial.'
+  }
+];
+
+export const MOCK_COMPLIANCE: ComplianceItem[] = [
+  {
+    id: 'CMP-001',
+    normaCodigo: 'NR-01.GRO',
+    requisito: 'Inventário de Riscos atualizado com revisão mínima anual ou na alteração de processos',
+    status: 'Conforme',
+    evidenciaId: 'EVD-001',
+    responsavel: 'Eng. Ricardo Mansur',
+    ultimaAuditoria: '2026-03-10',
+    observacoes: 'Matriz 3x3 alinhada ao inventário GRO com 15 riscos mapeados.'
+  },
+  {
+    id: 'CMP-002',
+    normaCodigo: 'NBR-14280.TF_TG',
+    requisito: 'Cálculo estatístico de TF e TG apurado com 1.000.000 HHT',
+    status: 'Conforme',
+    evidenciaId: 'EVD-004',
+    responsavel: 'Eng. Ricardo Mansur',
+    ultimaAuditoria: '2026-03-01',
+    observacoes: 'HHT auditada via sistema de folha de pagamento.'
+  },
+  {
+    id: 'CMP-003',
+    normaCodigo: 'NR-12.SEG_MAQUINAS',
+    requisito: 'Intertravamento e barreira óptica ativa na Prensa Hidráulica Usinagem',
+    status: 'Conforme',
+    evidenciaId: 'EVD-001',
+    responsavel: 'Téc. Lucas Miranda',
+    ultimaAuditoria: '2026-02-20',
+    observacoes: 'Ação 5W2H ACT-2026-089 concluída com ART.'
+  },
+  {
+    id: 'CMP-004',
+    normaCodigo: 'eSocial.S-2210',
+    requisito: 'Comunicação de acidentes transmitida dentro do prazo de 24h úteis',
+    status: 'Conforme',
+    evidenciaId: 'EVD-003',
+    responsavel: 'Dra. Camila Nogueira',
+    ultimaAuditoria: '2026-03-05',
+    observacoes: '100% das ocorrências registradas possuem protocolo gerado.'
+  }
+];
+
 

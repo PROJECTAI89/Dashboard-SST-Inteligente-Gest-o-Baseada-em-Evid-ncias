@@ -298,36 +298,49 @@ export const ActionsModule: React.FC<ActionsModuleProps> = ({
                 </div>
               </div>
 
-              {/* Status Update Controls */}
-              <div className="p-3.5 rounded-lg bg-slate-950 border border-slate-800 space-y-3">
-                <h4 className="font-bold text-white text-xs">Atualizar Status & Registrar Evidência</h4>
-                <div className="flex flex-wrap gap-2">
-                  {(['Não iniciada', 'Em andamento', 'Atrasada', 'Em validação', 'Concluída'] as const).map((st) => (
-                    <button
-                      key={st}
-                      onClick={() => onUpdateActionStatus(selectedAction.id, st, evidenceText)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-                        selectedAction.status === st
-                          ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold'
-                          : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'
-                      }`}
-                    >
-                      {st}
-                    </button>
-                  ))}
-                </div>
+                {/* Status Update Controls */}
+                <div className="p-3.5 rounded-lg bg-slate-950 border border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-bold text-white text-xs">Atualizar Status & Registrar Evidência (RN05 / PRD v2.2)</h4>
+                    <span className="text-[10px] text-zinc-500 font-mono">Evidence-First</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {(['Não iniciada', 'Em andamento', 'Atrasada', 'Em validação', 'Concluída'] as const).map((st) => (
+                      <button
+                        key={st}
+                        onClick={() => {
+                          if (st === 'Concluída' && !evidenceText.trim() && !selectedAction.evidenciaConclusao) {
+                            alert('Regra RN05 (PRD v2.2): Uma ação de segurança não pode ser concluída sem nota ou laudo de evidência comprovada.');
+                            return;
+                          }
+                          onUpdateActionStatus(selectedAction.id, st, evidenceText.trim() || selectedAction.evidenciaConclusao);
+                          setSelectedAction((prev) => prev ? { ...prev, status: st, evidenciaConclusao: evidenceText.trim() || prev.evidenciaConclusao } : null);
+                        }}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                          selectedAction.status === st
+                            ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold'
+                            : 'bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-800'
+                        }`}
+                      >
+                        {st}
+                      </button>
+                    ))}
+                  </div>
 
-                <div className="space-y-1 pt-2">
-                  <label className="text-slate-400 block font-medium">Nota de Evidência / Laudo de Conclusão Técnica:</label>
-                  <textarea
-                    rows={2}
-                    value={evidenceText}
-                    onChange={(e) => setEvidenceText(e.target.value)}
-                    placeholder="Descreva a evidência de conclusão (ex: ART emitida pelo CREA, homologação pelo comitê CIPA, foto anexada)..."
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500"
-                  />
+                  <div className="space-y-1 pt-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-slate-400 block font-medium">Nota de Evidência / Laudo de Conclusão Técnica (Obrigatória para Concluir):</label>
+                      <span className="text-[10px] text-amber-400 font-bold">RN05 Ativa</span>
+                    </div>
+                    <textarea
+                      rows={2}
+                      value={evidenceText}
+                      onChange={(e) => setEvidenceText(e.target.value)}
+                      placeholder="Descreva a evidência de conclusão (ex: ART emitida pelo CREA, homologação pelo comitê CIPA, foto anexada)..."
+                      className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                    />
+                  </div>
                 </div>
-              </div>
             </div>
 
             <div className="pt-3 border-t border-slate-800 flex justify-end">

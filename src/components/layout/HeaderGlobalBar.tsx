@@ -208,18 +208,7 @@ export const HeaderGlobalBar: React.FC<HeaderGlobalBarProps> = ({
             <span className="hidden md:inline">Governança</span>
           </button>
 
-          {/* PRD Document & Downloader */}
-          {onOpenPRD && (
-            <button
-              onClick={onOpenPRD}
-              id="btn-abrir-prd-modal"
-              className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-zinc-900 border border-amber-500/40 hover:bg-zinc-800 text-amber-300 transition-colors shadow-sm"
-              title="Visualizar e Descarregar PRD Oficial (27 Seções)"
-            >
-              <FileText className="w-3.5 h-3.5 text-amber-400" />
-              <span className="font-semibold">PRD</span>
-            </button>
-          )}
+
 
           {/* Role Switcher (RBAC) */}
           <div className="flex items-center gap-1.5 pl-2 border-l border-slate-800">

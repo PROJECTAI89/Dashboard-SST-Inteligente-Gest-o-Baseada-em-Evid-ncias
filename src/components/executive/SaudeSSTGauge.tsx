@@ -66,8 +66,11 @@ export const SaudeSSTGauge: React.FC<SaudeSSTGaugeProps> = ({
               <span className="font-mono text-[10px] font-normal text-slate-400 bg-slate-800/80 px-1.5 py-0.5 rounded">
                 IND-ISSST-05
               </span>
+              <span className="text-[9px] font-mono font-bold text-amber-400/90 bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.2 rounded">
+                Indicador Gerencial PROJECTAI
+              </span>
             </h2>
-            <p className="text-[11px] text-slate-400">Score consolidado ponderado de maturidade e conformidade preventiva</p>
+            <p className="text-[11px] text-slate-400">Algoritmo multicritério ponderado (0 a 100) — Seção 15 PRD v2.2</p>
           </div>
         </div>
 

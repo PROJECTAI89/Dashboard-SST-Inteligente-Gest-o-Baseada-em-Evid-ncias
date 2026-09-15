@@ -311,3 +311,40 @@ export interface AlertRule {
   versao: string;
 }
 
+// Modelagem PRD v2.2.0-PROD: Evidências, Normas e Conformidade
+export interface Evidencia {
+  id: string;
+  tipo: 'Foto' | 'Laudo Técnico' | 'ART' | 'Checklist Assinado' | 'Certificado Treinamento' | 'Ordem de Serviço';
+  nome: string;
+  descricao: string;
+  source: string;
+  fileReference?: string;
+  hash: string; // SHA-256 de integridade da evidência
+  capturedAt: string;
+  capturedBy: string;
+  createdAt: string;
+}
+
+export interface NormaRegra {
+  id: string;
+  codigo: string; // Ex: 'NR-01.GRO', 'NR-12.DISPOSITIVOS', 'NBR-14280.TF'
+  titulo: string;
+  versao: string;
+  vigenciaInicio: string;
+  vigenciaFim?: string;
+  fonte: string;
+  regra: string;
+  evidenciaRequerida: string;
+}
+
+export interface ComplianceItem {
+  id: string;
+  normaCodigo: string;
+  requisito: string;
+  status: 'Conforme' | 'Não conforme' | 'Parcial' | 'Não avaliado' | 'Sem evidência';
+  evidenciaId?: string;
+  responsavel: string;
+  ultimaAuditoria: string;
+  observacoes?: string;
+}
+

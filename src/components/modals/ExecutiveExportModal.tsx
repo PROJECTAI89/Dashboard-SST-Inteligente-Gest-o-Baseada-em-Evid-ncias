@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { FileDown, Printer, FileSpreadsheet, CheckCircle2, ShieldAlert, X, FileText, Loader2 } from 'lucide-react';
+import { FileDown, Printer, FileSpreadsheet, CheckCircle2, ShieldAlert, X, Loader2 } from 'lucide-react';
 import { IndiceSaudeSSTResult, KPICardData, GlobalFilterState, Ocorrencia, Acao5W2H, RiscoMatriz, UserRole } from '../../types/sst';
 import { downloadDashboardPDFReport } from '../../utils/pdfExportService';
 
@@ -72,15 +72,6 @@ export const ExecutiveExportModal: React.FC<ExecutiveExportModalProps> = ({
     const link = document.createElement('a');
     link.setAttribute('href', url);
     link.setAttribute('download', `relatorio_sst_projectai_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleDownloadPRD = () => {
-    const link = document.createElement('a');
-    link.href = '/PRD_PROJECTAI_SST.md';
-    link.download = 'PRD_SST_PROJECTAI_OFICIAL_v2.1.md';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -196,14 +187,6 @@ export const ExecutiveExportModal: React.FC<ExecutiveExportModalProps> = ({
             )}
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={handleDownloadPRD}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-zinc-800 hover:bg-zinc-700 text-amber-300 border border-amber-500/30 transition-colors"
-              title="Descarregar PRD Técnico Completo em Markdown"
-            >
-              <FileText className="w-4 h-4 text-amber-400" />
-              <span>Baixar PRD (.md)</span>
-            </button>
             <button
               onClick={handleExportCSV}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"

@@ -24,7 +24,10 @@ import {
   RefreshCw,
   ShieldAlert,
   Zap,
-  Activity
+  Activity,
+  FileText,
+  BookmarkCheck,
+  Hash
 } from 'lucide-react';
 import {
   AuditoriaLog,
@@ -32,6 +35,7 @@ import {
   AlertRule,
   IndicadorDicionario
 } from '../../types/sst';
+import { MOCK_EVIDENCIAS, MOCK_NORMAS_REGRAS, MOCK_COMPLIANCE } from '../../data/mockSstData';
 
 export const isCriticalComplianceLog = (log: AuditoriaLog): boolean => {
   const d = log.detalhes.toLowerCase();
@@ -70,7 +74,7 @@ export const GovernanceAuditoriaModule: React.FC<GovernanceAuditoriaModuleProps>
   onTriggerSimulatedCriticalEvent,
   criticalAlertActive
 }) => {
-  const [activeTab, setActiveTab] = useState<'AUDITORIA' | 'QUALIDADE' | 'DICIONARIO' | 'REGRAS'>('AUDITORIA');
+  const [activeTab, setActiveTab] = useState<'AUDITORIA' | 'QUALIDADE' | 'DICIONARIO' | 'REGRAS' | 'EVIDENCIAS'>('AUDITORIA');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterAction, setFilterAction] = useState<string>('TODAS');
   const [rulesState, setRulesState] = useState<AlertRule[]>(alertRules);
@@ -204,6 +208,18 @@ export const GovernanceAuditoriaModule: React.FC<GovernanceAuditoriaModuleProps>
         >
           <BellRing className="w-4 h-4" />
           <span>Motor de Regras ({rulesState.filter(r => r.ativo).length} ativas)</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('EVIDENCIAS')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-colors whitespace-nowrap ${
+            activeTab === 'EVIDENCIAS'
+              ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20 font-bold'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+          }`}
+        >
+          <BookmarkCheck className="w-4 h-4" />
+          <span>Evidências & Normas (PRD v2.2)</span>
         </button>
       </div>
 
@@ -659,6 +675,135 @@ export const GovernanceAuditoriaModule: React.FC<GovernanceAuditoriaModuleProps>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 5: EVIDÊNCIAS & NORMAS (PRD v2.2.0-PROD) */}
+      {activeTab === 'EVIDENCIAS' && (
+        <div className="space-y-6">
+          {/* Header Banner */}
+          <div className="p-4 rounded-xl bg-gradient-to-r from-slate-900 via-zinc-950 to-slate-900 border border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                  PRD v2.2.0 Seção 18 & 21
+                </span>
+                <span className="text-xs text-slate-400">Princípio Evidence-First & Auditabilidade</span>
+              </div>
+              <h3 className="text-base font-bold text-white mt-1">Repositório de Evidências & Rastreabilidade de Normas</h3>
+              <p className="text-xs text-slate-400">
+                Garantia de que cada conclusão, liberação ou encerramento de ação possua comprovação documental com assinatura ou hash de integridade.
+              </p>
+            </div>
+            <div className="text-right shrink-0">
+              <span className="text-2xl font-black text-amber-400">{MOCK_EVIDENCIAS.length}</span>
+              <span className="text-xs text-slate-400 block font-medium">Evidências Auditadas</span>
+            </div>
+          </div>
+
+          {/* Grid: Normas e Regras Ativas */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+              <FileText className="w-4 h-4 text-amber-400" />
+              Normas Regulamentadoras & Regras Vigentes
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {MOCK_NORMAS_REGRAS.map((norma) => (
+                <div key={norma.id} className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-bold text-amber-400 px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/20">
+                      {norma.codigo}
+                    </span>
+                    <span className="text-[10px] text-slate-500 font-mono">Vigência: {norma.vigenciaInicio}</span>
+                  </div>
+                  <h5 className="text-sm font-bold text-slate-100">{norma.titulo}</h5>
+                  <p className="text-xs text-slate-400 leading-relaxed">{norma.regra}</p>
+                  <div className="pt-2 border-t border-slate-800/80 text-[11px] text-slate-300">
+                    <span className="text-slate-500 font-semibold">Evidência Obrigatória Requerida: </span>
+                    <span className="text-amber-300/90">{norma.evidenciaRequerida}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Repositório de Evidências Rastreáveis */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+              <Hash className="w-4 h-4 text-emerald-400" />
+              Evidências Digitais Registradas com Hash Criptográfico
+            </h4>
+            <div className="space-y-2.5">
+              {MOCK_EVIDENCIAS.map((evd) => (
+                <div key={evd.id} className="p-4 rounded-xl bg-slate-900 border border-slate-800/90 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div className="space-y-1.5 flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono font-bold text-white px-2 py-0.5 rounded bg-slate-800 border border-slate-700">
+                        {evd.id}
+                      </span>
+                      <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        {evd.tipo}
+                      </span>
+                      <span className="text-xs text-slate-400 font-medium">Registrado por: {evd.capturedBy}</span>
+                      <span className="text-[11px] text-slate-500">• {evd.capturedAt}</span>
+                    </div>
+                    <h5 className="text-sm font-bold text-slate-200">{evd.nome}</h5>
+                    <p className="text-xs text-slate-400">{evd.descricao}</p>
+                    <div className="flex items-center gap-2 pt-1 font-mono text-[10px] text-slate-500">
+                      <span>Origem: {evd.source}</span>
+                      <span>|</span>
+                      <span className="truncate max-w-xs text-zinc-400">SHA-256: {evd.hash}</span>
+                    </div>
+                  </div>
+                  <div className="shrink-0 flex items-center gap-2">
+                    <span className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                      Integridade Verificada
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Matriz de Compliance & Auditoria Cruzada */}
+          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              Matriz de Cumprimento Normativo (Conforme PRD v2.2 Seção 18)
+            </h4>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-slate-800 text-slate-400">
+                    <th className="pb-2 font-medium">ID Item</th>
+                    <th className="pb-2 font-medium">Norma</th>
+                    <th className="pb-2 font-medium">Requisito Legal / Operacional</th>
+                    <th className="pb-2 font-medium">Status de Cumprimento</th>
+                    <th className="pb-2 font-medium">Evidência Vinculada</th>
+                    <th className="pb-2 font-medium">Responsável</th>
+                    <th className="pb-2 font-medium">Última Auditoria</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-900">
+                  {MOCK_COMPLIANCE.map((item) => (
+                    <tr key={item.id} className="hover:bg-slate-900/50">
+                      <td className="py-2.5 font-mono text-slate-400">{item.id}</td>
+                      <td className="py-2.5 font-bold text-amber-400">{item.normaCodigo}</td>
+                      <td className="py-2.5 text-slate-200">{item.requisito}</td>
+                      <td className="py-2.5">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                          {item.status}
+                        </span>
+                      </td>
+                      <td className="py-2.5 font-mono text-xs text-slate-400">{item.evidenciaId || '—'}</td>
+                      <td className="py-2.5 text-slate-300">{item.responsavel}</td>
+                      <td className="py-2.5 text-slate-500 font-mono">{item.ultimaAuditoria}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
